@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StyleSheet, Text, View, TextInput, Button } from "react-native";
+import { StyleSheet, Text, View, TextInput, Button, ScrollView, FlatList } from "react-native";
 
 export default function App() {
   const [product, setProduct] = useState("");
@@ -11,11 +11,14 @@ export default function App() {
 
   const submitHandler = () => {
     console.log(product);
-    setMyProduct((currentMyProducts) => [...currentMyProducts, product]);
+    const idString = Date.now().toString();
+    setMyProducts((currentMyProducts) => [{ key: idString, name: product }, ...currentMyProducts]);
+    setProduct("");
   };
 
   return (
     <View style={styles.container}>
+      <Text>My List</Text>
       <View style={styles.inputContainer}>
         <TextInput
           style={styles.textInput}
@@ -25,6 +28,12 @@ export default function App() {
         />
         <Button title="Valider" onPress={submitHandler} />
       </View>
+      <FlatList
+        data={myProducts}
+        renderItem={({ item }) => {
+          return <Text style={styles.items}>{item.name}</Text>;
+        }}
+      />
     </View>
   );
 }
@@ -42,5 +51,19 @@ const styles = StyleSheet.create({
     padding: 5,
     paddingLeft: 9,
     width: "90%",
+    fontSize: 18,
+    flexGrow: 1,
+  },
+  list: {
+    width: "90%",
+    marginTop: 10,
+    flexDirection: "column",
+  },
+  items: {
+    paddingVertical: 20,
+    paddingHorizontal: "auto",
+    fontSize: 17,
+    marginVertical: 6,
+    backgroundColor: "lightgrey",
   },
 });
