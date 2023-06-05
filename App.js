@@ -11,6 +11,7 @@ export default function App() {
 
   const submitHandler = () => {
     console.log(product);
+    setMyProduct((currentMyProducts) => [...currentMyProducts, product]);
   };
 
   return (
@@ -32,6 +33,7 @@ const styles = StyleSheet.create({
   container: {
     padding: 40,
     paddingTop: 60,
+    alignItems: "center",
   },
   inputContainer: { flexDirection: "row" },
   textInput: {
@@ -39,5 +41,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 5,
     paddingLeft: 9,
+    width: "90%",
   },
 });
